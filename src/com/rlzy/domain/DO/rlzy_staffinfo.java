@@ -1,18 +1,17 @@
 package com.rlzy.domain.DO;
-
-public class rlzy_staff {
+//员工信息表
+public class rlzy_staffinfo {
 	private String rlzy_staff_id;//员工id
 	private String staff_number;//员工工号
 	private String staff_name;//员工
 	private String staff_sex;//员工性别
 	private String staff_birth;//员工出生日期
 	private String staff_tel;//电话
-	private String staff_address;
-	private String staff_record;
-	private String staff_depaterment;
-	private String staff_duty;
-	private String staff_agreement_id;
-	private String staff_status;
+	private String staff_address;//地址
+	private String staff_record;//学历
+	private String staff_depaterment;//部门
+	private String staff_duty;//职务
+	private String staff_status;//工作状态
 	
 	public String getRlzy_staff_id() {
 		return rlzy_staff_id;
@@ -73,12 +72,6 @@ public class rlzy_staff {
 	}
 	public void setStaff_duty(String staff_duty) {
 		this.staff_duty = staff_duty;
-	}
-	public String getStaff_agreement_id() {
-		return staff_agreement_id;
-	}
-	public void setStaff_agreement_id(String staff_agreement_id) {
-		this.staff_agreement_id = staff_agreement_id;
 	}
 	public String getStaff_status() {
 		return staff_status;

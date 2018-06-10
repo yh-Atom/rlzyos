@@ -140,6 +140,7 @@ public class UserAction extends ActionSupport{
 			public void getUser() throws IOException{
 				showUserVO suv = userService.getUserByPage(queryString, currPage);
 				Gson gson = new Gson();
+				System.out.println("queryString的值"+queryString);
 				String result = gson.toJson(suv);
 				HttpServletResponse response = ServletActionContext.getResponse();
 				response.setContentType("text/html;charset=utf-8");

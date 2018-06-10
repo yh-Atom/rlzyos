@@ -12,33 +12,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<title>用户登录界面</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-
-<title>登录页面</title>
 <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="<%=basePath%>css/login.css">
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/user/login.js"></script>
-
+<script type="text/javascript" src="<%=basePath%>js/user/login.js"></script>
 </head>
 <body>
-	<div class="bg center-block">
+	<div class="bg center-block"></div>
 	<br>	
 	<h2 class="text-center" style="color: white;"></h2>
-
-<title>用户登录界面</title>
-<!--------------------------------------------------------------------------------->
-<script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
-<!--------------------------------------------------------------------------------->
-
-<!-------------------------------------------z-------------------------------------->
-
-<script src="<%=basePath%>js/toastr.js"></script>
-<!--------------------------------------------------------------------------------->
-</head>
-<body>
 <div class="contain center-block">
 	<!-- 导航 -->
 	<nav id="navbar" class="navbar navbar-default navbar-fixed-top" 
@@ -71,20 +56,9 @@
 	 		<button style="margin: 10px;" class="btn btn-default btn-lg btn-info" onclick="login()">确认登录</button>
 	 		<button style="margin: 10px;" class="btn btn-default btn-lg btn-info" onclick=$('#login_username,#login_password').val(''),toastr.info("已重置");>重置信息</button>
 	 	</div>
-
-
    </div>
-
 	    </div>		
 	</div>
-	
 	<!-- 右DIV -->
-<!-- 	<div class="right"> -->
-<!-- 		<div class="login-right center-block">	 -->
-<!-- 			<div class="picture"></div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-</div>
-   </div>
 </body>
 </html>
