@@ -16,14 +16,15 @@
 </head>
 	<script type="text/javascript" src="<%=basePath%>js/staff/updataStaff.js"></script>
 <body>
-
+<div id="wrapper">
 	<s:action name="user_implements_navbar" namespace="/user" executeResult="true" />
+	<s:action name="user_LeftIndex" namespace="/user" executeResult="true" />
 	<!---------------------------------------------------------------------------------------------------->
-	<div style="margin: 80px 0 0 0; float: left; width: 100%; overflow: hidden;">
+	<div style="margin: 80px 0 0 0; float: right; width: 82%; overflow: hidden;">
 		<div class="panel" style="width: 1100px; margin: 20px auto; overflow: inherit; position: relative;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title">新增人员</h3>
+				<h3 class="panel-title">修改基本人员信息</h3>
 			</div>
 			<div style="margin-left: 5%;">
 				<button onclick="javascript:history.go(-1)" type="button"
@@ -44,10 +45,10 @@
 							<tr style="height: 20px"></tr>
 							<tr>
 								<td><label class="staff_info_label">员工工号</label></td>
-								<td><input name="staff.staff_number" class="form-control" type="text"></td>
+								<td><input id="staff_number" name="staff.staff_number" class="form-control" type="text"></td>
 								
 								<td><label class="staff_info_label">姓名</label></td>
-								<td><input name="staff.staff_name" class="form-control" type="text"></td>
+								<td><input id="staff_name" name="staff.staff_name" class="form-control" type="text"></td>
 								
 							</tr>
 							<tr>
@@ -70,23 +71,22 @@
 												<option value="女">女</option></select></td>
 								
 								<td><label class="staff_info_label">出生年月</label></td>
-								<td><input name="staff.staff_birth" id="idNumber"
-									class="staff_birthTime" type="text"></td>
+								<td><input name="staff.staff_birth" id="staff_birthTime"
+									class="form-control"  type="text"></td>
 								
 							</tr>
 							<tr>
 								<td><label class="staff_info_label">联系方式</label></td>
-								<td><input style="font-size: 12px;"
+								<td><input style="font-size: 12px;" id="staff_tel"
 									name="staff.staff_tel" class="form-control" type="text"></td>
 								
 								<td><label class="staff_info_label">家庭住址</label></td>
-								<td><input name="staff.staff_address"
-									class="form-control" type="text"></td>
+								<td><input name="staff.staff_address" id="staff_address" class="form-control" type="text"></td>
 								
 							</tr>
 							<tr>
 								<td><label class="staff_info_label">学历</label></td>
-								<td><select class="form-control"
+								<td><select class="form-control" id="staff_record"
 									name="staff.staff_record">
 										<option></option>
 										<option value="初中">初中</option>
@@ -96,8 +96,8 @@
 										<option value="研究生">研究生</option>
 								</select></td>
 								
-								<td><label class="staff_info_label">现部门</label></td>
-								<td><select class="form-control"
+								<td><label class="staff_info_label">部门</label></td>
+								<td><select class="form-control" id="staff_depaterment"
 									name="staff.staff_depaterment">
 										<option></option>
 										<option value="一部门">一部门</option>
@@ -107,7 +107,7 @@
 								
 							<tr>
 								<td><label class="staff_info_label">员工状态</label></td>
-								<td><select class="form-control"
+								<td><select class="form-control" id="staff_status"
 									name="staff.staff_status">
 										<option></option>
 										<option value="在职">在职</option>
@@ -116,7 +116,7 @@
 								
 								<td><label class="staff_info_label">职务</label></td>
 								
-								<td><select class="form-control" name="staff.staff_duty">
+								<td><select class="form-control" name="staff.staff_duty" id="staff_duty">
 										<option></option>
 										<option value="管理员">管理员</option>
 										<option value="经理">经理</option>
@@ -130,7 +130,7 @@
 			</div>
 		</div>	
 	</div>	
-
+</div>
 <!-- 时间javescript -->
 	<script type="text/javascript">
 		$.datetimepicker.setLocale('ch');

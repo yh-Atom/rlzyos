@@ -2,12 +2,12 @@ package com.rlzy.dao.impl.staff;
 
 import java.util.List;
 
+import org.apache.xmlbeans.impl.store.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.rlzy.dao.staff.StaffExpDao;
 import com.rlzy.domain.DO.rlzy_staffexp;
-import com.rlzy.domain.DTO.Staff.staffListDTO;
 import com.rlzy.domain.VO.showStaffExpVO;
 
 public class StaffExpDaoImpl implements StaffExpDao {
@@ -58,7 +58,7 @@ public class StaffExpDaoImpl implements StaffExpDao {
 	@Override
 	public void updataStaffExp(rlzy_staffexp staffExp) {
 		// TODO Auto-generated method stub
-		getSession().saveOrUpdate(staffExp);
+		getSession().update(staffExp);
 	}
 	//删除该员工所有履历
 	@Override
@@ -90,5 +90,17 @@ public class StaffExpDaoImpl implements StaffExpDao {
 		}
 		long count = (long) getSession().createQuery(hql).uniqueResult();
 		return (int) count;
+	}
+	@Override
+	public String getStaffNameByStaffNumber(String staffExp_staff){
+		 String hql = " select staff_name from rlzy_staffinfo where staff_number= '" + staffExp_staff + "'";
+		 String staff_name = (String) getSession().createQuery(hql).uniqueResult();
+		 return staff_name;
+	 }
+
+	@Override
+	public void addStaffExp(rlzy_staffexp rs) {
+		// TODO Auto-generated method stub
+		getSession().save(rs);
 	}
 }

@@ -2,8 +2,7 @@ var xmlHttp;
 // addStaff新建人员
 function Add_Staff() {
 	var url= "/rlzyos/staff/staff_addStaff";
-	$.
-		confirm({
+	$.confirm({
 			title : '新建!',
 			content : '确定新建!',
 			buttons : {

@@ -24,4 +24,14 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 
+	<!-- 员工合同信息的spring -->
+	<bean id="staffAgreementAction" class="com.rlzy.action.staff.StaffAgreementAction" scope="prototype">
+		<property name="staffAgreementService" ref="staffAgreementService"></property>
+	</bean>	
+	<bean id="staffAgreementService" class="com.rlzy.service.impl.staff.StaffAgreementServiceImpl">
+		<property name="staffAgreementDao" ref="staffAgreementDao"></property>
+	</bean>
+	<bean id="staffAgreementDao" class="com.rlzy.dao.impl.staff.StaffAgreementDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 </beans>

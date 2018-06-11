@@ -1,5 +1,5 @@
 package com.rlzy.domain.DO;
-//工作经历表
+//工作履历表
 public class rlzy_staffexp {
 	private String rlzy_staffExp_id;//工作经历id(uuid)
 	private String staffExp_staff;//外键，员工工号

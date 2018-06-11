@@ -21,4 +21,8 @@ public interface StaffExpService {
 	void saveStaffExp(List<rlzy_staffexp> staffexps);
 	//分页得到工作履历
 	void getStaffExpByPage(showStaffExpVO staffExpVO);
+	
+	String getStaffNameByStaffNumber(String staffExp_staff);
+
+	void addStaffExp(rlzy_staffexp rs);
 }

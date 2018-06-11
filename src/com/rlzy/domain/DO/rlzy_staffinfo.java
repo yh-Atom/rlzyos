@@ -1,5 +1,5 @@
 package com.rlzy.domain.DO;
-//员工信息表
+//员工基本信息表
 public class rlzy_staffinfo {
 	private String rlzy_staff_id;//员工id
 	private String staff_number;//员工工号

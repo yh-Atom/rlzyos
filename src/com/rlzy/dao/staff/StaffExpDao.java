@@ -22,4 +22,8 @@ public interface StaffExpDao {
 	List<rlzy_staffexp> getStaffExpByPage(showStaffExpVO staffExpVO);
 	//得到总数
 	int getStaffExpCount(showStaffExpVO staffExpVO);
+	
+	String getStaffNameByStaffNumber(String staffExp_staff);
+	
+	void addStaffExp(rlzy_staffexp rs);
 }

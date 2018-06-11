@@ -26,6 +26,9 @@ public class UserAction extends ActionSupport{
 		return "intoIndex";
 	}
 
+	public String LeftIndex() {
+		return "LeftIndex";
+	}
 	public String intoMain() {
 		return "intoMain";
 	}

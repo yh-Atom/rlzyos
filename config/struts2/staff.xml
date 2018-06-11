@@ -19,5 +19,8 @@
 		<action name="staffExp_*" method="{1}" class="com.rlzy.action.staff.StaffExpAction">
 		
 		</action>
+		<action name="staffAgreement_*" method="{1}" class="com.rlzy.action.staff.StaffAgreementAction">
+		
+		</action>
 	</package>
 </struts>

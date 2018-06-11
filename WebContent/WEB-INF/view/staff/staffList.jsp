@@ -15,9 +15,9 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" href="<%=basePath%>css/Team/Team.css">
-<script type="text/javascript"
-	src="<%=basePath%>js/staff/showStaffInfor.js"></script>
+<link rel="stylesheet" href="<%=basePath%>css/Staff/Staff.css"> 
+<%-- <link rel="stylesheet" href="<%=basePath%>css/user/userIndex.css"> --%>
+<script type="text/javascript" src="<%=basePath%>js/staff/showStaffInfor.js"></script>
 <style type="text/css">
 #bottomPage:hover {
 	cursor: pointer;
@@ -25,9 +25,13 @@
 </style>
 </head>
 <body>
+	<input id="hideQueryString" type="text" class="hideDiv" />
+	<input id="hideCurrPage" type="text" class="hideDiv" />
+<div id="wrapper">
 	<s:action name="user_implements_navbar" namespace="/user" executeResult="true" />
 	
-	<div style="margin: 80px 0 0 0; float: left; width: 100%;">
+	<s:action name="user_LeftIndex" namespace="/user" executeResult="true" />
+	<div style="margin: 80px 0 0 20px; float: right; width: 82%;">
 		<div class="panel" style="width: 95%; margin: 20px auto;" id="allPage">
 			<!--  -->
 			<div class="panel-heading">
@@ -145,5 +149,6 @@
 			</div>
 			</div>
 		</div>
+</div>
 </body>
 </html>

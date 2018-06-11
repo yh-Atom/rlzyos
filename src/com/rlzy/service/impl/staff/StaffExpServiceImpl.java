@@ -46,7 +46,7 @@ public class StaffExpServiceImpl implements StaffExpService {
 		// TODO Auto-generated method stub
 		staffExpDao.deleteStaffExp(rlzy_staffExp_id);
 	}
-	//保存一条履历
+	//保存多条履历
 	@Override
 	public void saveStaffExp(List<rlzy_staffexp> staffexps) {
 		// TODO Auto-generated method stub
@@ -63,5 +63,17 @@ public class StaffExpServiceImpl implements StaffExpService {
 		staffExpVO.setTotalCount(count);
 		List<rlzy_staffexp> staffexps = staffExpDao.getStaffExpByPage(staffExpVO);
 		staffExpVO.setStaffExps(staffexps);
+	}
+
+	@Override
+	public String getStaffNameByStaffNumber(String staffExp_staff) {
+		// TODO Auto-generated method stub
+		return staffExpDao.getStaffNameByStaffNumber(staffExp_staff);
+	}
+
+	@Override
+	public void addStaffExp(rlzy_staffexp rs) {
+		// TODO Auto-generated method stub
+		staffExpDao.addStaffExp(rs);
 	}
 }

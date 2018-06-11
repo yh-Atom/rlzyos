@@ -30,6 +30,23 @@ function addUser() {
 	xmlHttp.onreadystatechange = addUserBack;
 }
 
+function addUserBack() {
+	if (isBack()) {
+		var result = xmlHttp.responseText;
+		if (result == "用户名存在") {
+			toastr.error("用户名已经存在请重新填写用户名！");
+			$("#addLoadingDiv").addClass("hideDiv");
+			$("#addContent").removeClass("hideDiv");
+		} else {
+			toastr.success("上传成功！");
+			$("#addLoadingDiv").addClass("hideDiv");
+			$("#addContent").removeClass("hideDiv");
+			$("#addContent input").val("");
+			$("#addContent input[name='user_username']").focus();
+		}
+	}
+}
+
 function reLoadUser() {
 	$("#addContent input").val("");
 	$("#addContent input[name='user_username']").focus();
@@ -45,6 +62,7 @@ function reLoadUser() {
 	xmlHttp.send(formData);
 	xmlHttp.onreadystatechange = loadUserBack;
 }
+
 
 function updateUser(event) {
 	$("#updateLoadingDiv").removeClass("hideDiv");
@@ -93,24 +111,7 @@ function getUserByIdBack() {
 	}
 }
 
-function addUserBack() {
-	if (isBack()) {
-		var result = xmlHttp.responseText;
-		
-		alert("adduser")
-		if (result == "用户名存在") {
-			toastr.error("用户名已经存在请重新填写用户名！");
-			$("#addLoadingDiv").addClass("hideDiv");
-			$("#addContent").removeClass("hideDiv");
-		} else {
-			toastr.success("上传成功！");
-			$("#addLoadingDiv").addClass("hideDiv");
-			$("#addContent").removeClass("hideDiv");
-			$("#addContent input").val("");
-			$("#addContent input[name='user_username']").focus();
-		}
-	}
-}
+
 
 function loadUserBack() {
 	if (isBack()) {

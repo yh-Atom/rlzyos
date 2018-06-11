@@ -10,6 +10,7 @@ window.onload = function() {
 //通过id获取员工。并且显示该员工信息
 function get_staffDetails(staff_id) {
 	alert("通过id得到信息并修改");
+	alert(staff_id);
 	var url = "/rlzyos/staff/staff_getStaffById?rlzy_staff_id="
 			+ staff_id;
 	get_staffDetails_Ajax(url, staff_id);

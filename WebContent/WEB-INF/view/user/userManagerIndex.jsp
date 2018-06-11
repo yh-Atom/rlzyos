@@ -19,16 +19,23 @@
 	<!----------------------------------------------- 隐藏信息开始 --------------------------------------------------->
 	<input id="hideQueryString" type="text" class="hideDiv" />
 	<input id="hideCurrPage" type="text" class="hideDiv" />
-
+<div id="wrapper">
+	
 	<!-----------------------------------------引入导航条 ------------------------------------------------------>
-		<s:action name="user_implements_navbar" namespace="/user" executeResult="true" />
 
 	<!----------------------------------------主体内容 -------------------------------------------------------- -->
 
-	<div style="margin: 80px 0 0 0; float: left; width: 100%;">
+	
+			
 		<!---------------------------------------------------------------------------------------------------->
+		<s:action name="user_implements_navbar" namespace="/user" executeResult="true" />
+	
+		<div><s:action name="user_LeftIndex" namespace="/user" executeResult="true" /></div>
 		<!---------------------------------------------------------------------------------------------------->
-		<div class="panel" style="width: 95%; margin: 20px auto;">
+		<div style="margin: 80px 0 0 30px; float: right; width:82%;">
+		
+			<div class="panel" style="width: auto; margin: 20px auto;">
+			
 			<div id="" style="height: 80px; padding: 20px;">
 				<div class="managerClass" style="float: right; margin-left: 10px;">
 					<button onclick="cleanInput" data-toggle="modal"
@@ -80,6 +87,7 @@
 		<!---------------------------------------------------------------------------------------------------->
 		<!---------------------------------------------------------------------------------------------------->
 	</div>
+</div>
 	<!-----------------------------------------------------------------新增模态框---------------------------------------------------  -->
 	<div class="modal fade" id="addUser" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
