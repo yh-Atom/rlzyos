@@ -39,9 +39,9 @@
 					<button style="margin-left: 15px;" type="button" class="btn btn-default" data-toggle='modal' data-target='#addStaffExp'>
 						<i class="fa fa-plus-square"></i>新增履历
 					</button>
-					<input type="text" id="searchInput" class="form-control"
+					<!-- <input type="text" id="searchInput" class="form-control"
 						style="width: 250px; display: inline-block; float: right;"
-						oninput="changeName(this)" placeholder="请输入搜索内容"/>
+						oninput="changeName(this)" placeholder="请输入搜索内容"/> -->
 				</div>
 				<div class="col-md-12">
 					<div id="loadingLayer" style="margin: 0 auto; width: 45px;">
@@ -55,7 +55,8 @@
 							<table class="table table-hover table-condensed staff_table_info">
 								<thead>
 									<tr>
-										<th>员工工号</th>
+										<th>工号</th>
+										<th>姓名</th>
 										<th>工作地址</th>
 										<th>开始时间</th>
 										<th>结束时间</th>
@@ -67,15 +68,16 @@
 									 <tr v-for="staffExp in staffExps" style="text-align: center;"> 
 										<td>
 										<a :id="staffExp.staffExp_staff" onclick="skipToDetails(this)">
-										<span v-html="staffExp.staffExp_staff"></span></a>
+										<span v-html="staffExp.staff_number"></span></a>
 										</td>
+										<td>{{ staffExp.staff_name }}</td>
 										<td>{{ staffExp.staffExp_address }}</td>
 										<td>{{ staffExp.staffExp_startTime }}</td>
 										<td>{{ staffExp.staffExp_overTime }}</td>
 										<td>{{ staffExp.staffExp_remark }}</td>
-										<td><button onclick="createConfirmUpdata(this)" 
-												:id="staffExp.rlzy_staffExp_id" data-toggle='modal' data-target='#updateStaffExp' class='btn btn-primary'><i class="fa fa-pencil-square-o"></i>修改</button>
-											<button onclick="createConfirmDelete(this)"
+										<td><!-- <button onclick="createConfirmUpdata(this)" 
+												:id="staffExp.rlzy_staffExp_id" data-toggle='modal' data-target='#updateStaffExp' class='btn btn-primary'><i class="fa fa-pencil-square-o"></i>修改</button> -->
+											<button onclick="createConfirmDeleteExp(this)"
 												:id="staffExp.rlzy_staffExp_id" class="btn btn-danger"><i class="fa fa-trash-o"></i>删除</button></td>
 									</tr>
 								</tbody>
@@ -83,7 +85,7 @@
 							<div id="bottomPage" style="padding: 20px;">
 								<span>当前页数:<span id="currPage">{{ currPage }}</span></span> <span>共:<span
 									id="totalPage">{{ totalPage }}</span>页<span>共:<span
-									id="totalPage">{{ totalCount }}</span>条记录数
+									id="totalCount">{{ totalCount }}</span>条记录数
 								</span> <span onclick="firstPage()" id="indexPage"
 									class="pageOperation">首页</span> <span onclick="prePage()"
 									id="previousPage" class="pageOperation">上一页</span> <span
@@ -116,10 +118,10 @@
 					<h4 class="modal-title">修改员工履历</h4>
 				</div>
 				<div class="modal-body">
- 					<%-- <div id="updateLoadingDiv" class="hideDiv" 
+ 			 <div id="updateLoadingDiv" class="hideDiv" 
 						style="width: 319px; margin: 0 auto;"> 
 						<img alt="" src="<%=basePath%>img/loading.gif">
-				</div>  --%>
+				</div>
 					<div id="updateContent">
 						<form id="updatestaffExpForm">
 							<table class="table" style="margin: 0 auto;">
@@ -128,8 +130,8 @@
 									<td><input id="staffExp_staff" name="staffExp_staff"
 										type="text" class="form-control" readonly="readonly"></td>
 									<td><label>姓名：</label></td>
-									<td><input id="staff_name" name="staff_name"
-										type="text" class="form-control" readonly="readonly"></td>
+									<td><input readonly="readonly" id="staff_name" name="staff_name"
+										type="text" class="form-control" ></td>
 								</tr>
 								<tr>
 									<td><label>工作地点：</label></td>
@@ -152,7 +154,7 @@
 				</div>
 				<div class="modal-footer">
 					<button onclick="loadData()" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button id="updateStaffExpBtn" onclick="updateStaffExp(this)"  type="button" class="btn btn-primary">修改</button>
+					<button id="updateStaffExpBtn" onclick="updateStaffExp(this)"  type="button" class="btn btn-primary" data-dismiss="modal">修改</button>
 				</div>
 			</div>
 			<!-- /.modal-content id="updateBtn" -->
@@ -181,24 +183,24 @@
 							<table class="table" style="margin: 0 auto;">
 								<tr>
 									<td><label>工号：</label></td>
-									<td><input id="staffExp_staff" name="staffExp_staff" oninput="getName(this)" 
+									<td><input id="staffExp_addstaff" name="staffExp.staffExp_staff" oninput="getName(this)" 
 									placeholder="请输入工号" type="text" class="form-control"></td>
 									<td><label>姓名：</label></td>
-									<td><input id="staff_addname" name="staff_addname" type="text" class="form-control"></td>
+									<td><input  readonly="readonly" id="staff_addname" name="staffExp.staff_addname" type="text" value="请输入对应的工号" class="form-control"></td>
 								</tr>
 								<tr>
 									<td><label>工作地点：</label></td>
-									<td><input id="staffExp_address" name="staffExp_address"
+									<td><input id="addstaffExp_address" name="staffExp.staffExp_address"
 										type="text" class="form-control" placeholder="请输入工作地点"></td>
 									<td><label>开始时间：</label></td>
-									<td><input id="staffExp_startTime" name="staffExp_startTime"
+									<td><input id="addstaffExp_startTime" name="staffExp.staffExp_startTime"
 										type="text" class="staff_StartTime form-control" placeholder="请输入开始时间"></td>
 								</tr>
 								<tr><td><label>结束时间：</label></td>
-									<td><input id="staffExp_overTime" name="staffExp_overTime"
+									<td><input id="addstaffExp_overTime" name="staffExp.staffExp_overTime"
 										type="text" class="staff_OverTime form-control" placeholder="请输入结束时间"></td>
 									<td><label>备注：</label></td>
-									<td><input id="staffExp_remark" name="staffExp_remark"
+									<td><input id="addstaffExp_remark" name="staffExp.staffExp_remark"
 										type="text" class="form-control" placeholder="请输入备注"></td>
 								</tr>
 							</table>

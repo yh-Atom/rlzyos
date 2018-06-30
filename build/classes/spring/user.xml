@@ -5,9 +5,8 @@
 
 	<bean id="userAction" class="com.rlzy.action.user.UserAction" scope="prototype">
 		<property name="userService" ref="userService"></property>
-	</bean>	
+	</bean>
 	
-
 	<bean id="userService" class="com.rlzy.service.impl.user.UserServiceImpl">
 		<property name="userDao" ref="userDao"></property>
 	</bean>
@@ -15,5 +14,4 @@
 	<bean id="userDao" class="com.rlzy.dao.impl.user.UserDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-
 </beans>

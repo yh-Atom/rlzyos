@@ -15,11 +15,41 @@ function keyLogin(event) {
 		login();
 	}
 }
+
+//过滤一些敏感字符函数
+function filterSqlStr(value){
+	
+	var sqlStr=sql_str().split(',');
+	var flag=false;
+	for(var i=0;i<sqlStr.length;i++){
+		
+		if(value.toLowerCase().indexOf(sqlStr[i])!=-1){
+			flag=true;
+			break;			
+		}
+	}
+	return flag;
+}
+
+function sql_str(){
+	var str="and,delete,or,exec,insert,select,union,update,count,*,',join,>,<";
+	return str;
+
+}
 //登录
 function login() {
-	getXmlHttp();
+	
 	var user_username = document.getElementById("login_username").value;
 	var user_password = document.getElementById("login_password").value;
+	//过滤一些敏感字符函数
+	re= /select|update|delete|exec|count|'|"|=|;|>|<|%/i;
+	var str="and,delete,or,exec,insert,select,union,update,count,*,',join,>,<";
+	if ( filterSqlStr(user_username) || filterSqlStr(user_password)){
+		toastr.error("用户名或密码字符中包含了敏感字符"+sql_str()+",请重新输入！");
+		return false;
+	}else{
+		getXmlHttp();
+	
 	xmlHttp.open("POST","/rlzyos/user/user_login",true);
 	var formData = new FormData();
 	formData.append("user_username", user_username);
@@ -28,21 +58,44 @@ function login() {
 	xmlHttp.onreadystatechange = function() {
 		if (isBack()) {
 			var result = xmlHttp.responseText;
-			alert(result);
-			switch (result) {
-			case "userNoExist":
-				toastr.warning("用户名不存在！");
-				break;
-			case "passwordError":
-				toastr.error("密码错误！若忘记密码请联系管理员更改");
-				break;
-			case "loginSuccess":
-
+			/*alert(result);*/
+			console.log(result);
+//			switch (result) {
+//			case "userNoExist":
+//				toastr.warning("用户名不存在！");
+//				break;
+//			case "PasswordError":
+//				toastr.error("密码错误！若忘记密码请联系管理员更改");
+//				break;
+//			case "loginSuccess":
+			
+				/*toastr.success("登陆成功！");
 				window.location = "/rlzyos/user/user_intoIndex";
-
+*/
+			if(result=="userNoExist"){
+				toastr.warning("用户名不存在！");
+			}else if(result=="PasswordError"){
+				toastr.error("密码错误！若忘记密码请联系管理员更改");
+			}else if(result=="loginSuccess"){
+				//得到数据
+				getXmlHttp();
+				xmlHttp.open("POST", "/rlzyos/staff/staff_getStaffData", true);
+				xmlHttp.send();
+				xmlHttp.onreadystatechange = function() {
+					if (isBack()) {
+						console.log("得到数据");
+						alert("xixi");
+						}
+					}
+				toastr.success("登陆成功！");
+				window.location = "/rlzyos/user/user_intoIndex";
+				
+			
 			}
 		}
 	}
+}
+		
 }
 function getXmlHttp() {
 	if (window.XMLHttpRequest) {

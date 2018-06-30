@@ -79,7 +79,8 @@
 											class="form-control">
 												<option value="">学历</option>
 												<option value="硕士">硕士</option>
-												<option value="大学">大学</option>
+												<option value="本科">本科</option>
+												<option value="专科">专科</option>
 												<option value="高中">高中</option>
 												<option value="初中">初中</option>
 												<option value="小学">小学</option></select>
@@ -92,11 +93,10 @@
 								<tbody>
 									 <tr v-for="staff in staffs" style="text-align: center;"> 
 										<td>
-										<a :id="staff.rlzy_staff_id" onclick="skipToDetails(this)">
+										<a :id="staff.rlzy_staff_id" onclick="skipToDetail(this)">
 										<span v-html="staff.staff_name"></span></a>
 										</td>
 										<td>{{ staff.staff_sex }}</td>
-								
 										<td>{{ staff.staff_depaterment }}</td>
 										<td>{{ staff.staff_birth }}</td>
 										<td>{{ staff.staff_status }}</td><!-- 员工状态-->
@@ -121,9 +121,9 @@
 									onclick="nextPage()" id="nextPage" class="pageOperation">下一页</span>
 								<span onclick="endPage()" id="lastPage" class="pageOperation">末页</span>
 								<span> <input id="skipPage" class="form-control"
-									type="text"
+									type="text" 
 									style="display: inline-block; text-align: center; width: 60px; height: 30px;"
-									class="queryInput">
+									class="jumpInput">
 									<button onclick="jumpPage()" class="btn btn-default"
 										style="height: 30px;">跳转</button>
 								</span>

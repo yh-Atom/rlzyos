@@ -4,17 +4,42 @@ function showPwContent() {
 	$("#passwordContent").show();
 
 }
+//过滤一些敏感字符函数
+function filterSqlStr(value){
+	
+	var sqlStr=sql_str().split(',');
+	var flag=false;
+	for(var i=0;i<sqlStr.length;i++){
+		
+		if(value.toLowerCase().indexOf(sqlStr[i])!=-1){
+			flag=true;
+			break;			
+		}
+	}
+	return flag;
+}
+function sql_str(){
+	var str="and,delete,or,exec,insert,select,union,update,count,*,',join,>,<";
+	return str;
 
+}
 function updatePw() {
 	$("#passwordContent").hide();
 	$("#passwordLoadingDiv").show();
 	var newPassword = $("#newPassword").val();
 	var newPasswordAgain = $("#newPasswordAgain").val();
+	re= /select|update|delete|exec|count|'|"|=|;|>|<|%/i;
+	var str="and,delete,or,exec,insert,select,union,update,count,*,',join,>,<";
 	if(newPassword != newPasswordAgain){
 		toastr.warning("两次密码不一致!");
 		$("#passwordLoadingDiv").hide();
 		$("#passwordContent").show();
-	} else {
+	}else if ( filterSqlStr(newPassword)){
+		toastr.error("用户名或密码字符中包含了敏感字符"+sql_str()+",请重新输入！");
+		$("#passwordLoadingDiv").hide();
+		$("#passwordContent").show();
+		return false;	
+	}else {
 		getXmlHttp();
 		var oldPassword = $("#oldPassword").val();
 		xmlHttp.open("POST","/rlzyos/user/user_updatePassword",true);
@@ -25,15 +50,14 @@ function updatePw() {
 		xmlHttp.onreadystatechange = function(){
 			if(isBack()){
 				var result = xmlHttp.responseText;
-				alert(result);
 				if(result == "oldPasswordError") {
 					toastr.error("原密码错误！");
 					$("#passwordLoadingDiv").hide();
-					$("#passwordContent").show();		
+					$("#passwordContent").show();
 				} else if(result == "updateFail") {
 					toastr.error("修改失败请重新登录！");
 					$("#passwordLoadingDiv").hide();
-					$("#passwordContent").show();	
+					$("#passwordContent").show();
 				} else if(result == "updateSuccess") {
 					toastr.success("修改成功！");
 					$("#oldPassword").val("");
@@ -46,8 +70,7 @@ function updatePw() {
 			
 		}
 		
-	}
-	
+	}	
 }
 
 function getXmlHttp() {

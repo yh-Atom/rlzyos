@@ -4,30 +4,41 @@ window.onload = function() {
 		el:'.panel',
 		data:{
 			returnData:'',
-			studys:'',
-			works:"",
-			familys:"",
-		    moves:"",
-		    rewards:"",
-		    punishments:"",
-		    furloughs:""
-			
+			exps:'',
+			agreements:"",
+			awards:"",
+			moves:"",
+			trains:""
 		}
 	})
 	var url = window.location.href;
 	staff_id = url.substring(url.indexOf("=") + 1);
 	console.log(staff_id);
 	get_staffDetails(staff_id);
+	$.ajax({
+		url : '/rlzyos/staff/staffTrain_getTrainName',
+		type : 'post',
+		success : function(data) {
+			var result = JSON.parse(data);
+			console.log(result);
+			console.log(result.length);
+			for (var i = 0; i < result.length; i++) {
+				document.getElementById("train_name").innerHTML = document
+						.getElementById("train_name").innerHTML
+						+ "<option value='"
+						+ result[i].train_name
+						+ "'>"
+						+ result[i].train_name
+						+ "</option>";
+			}
+		}
+	});
 }
-//条状打印详细页面
-function staff_print(){
-	window.open("/xsjsglxt/team/Staff_intoPrintPage?id="
-			+ staff_id);
-}
+
 function get_staffDetails(staff_id) {
 	console.log("b1");
-	var url = "/xsjsglxt/team/Staff_getPolicemanByStaffId?policeman.xsjsglxt_staff_id="
-			+ staff_id;
+	var url = "/rlzyos/staff/staff_getStaffById?rlzy_staff_id="
+			+ staff_id;;
 	get_staffDetails_Ajax(url, staff_id);
 }
 function get_staffDetails_Ajax(url, staff_id) {
@@ -45,101 +56,95 @@ function get_staffDetails_Ajax(url, staff_id) {
 			staff_info = JSON.parse(staff_info);
 			staffVue.returnData  = staff_info;
 			console.log(staff_info);
-			document.getElementById("photo-show").innerHTML = "<img src='/xsjsglxt/team/Staff_downloadPhoto?staff_imageFileName="
-				+ staff_info.staff_photo + "'/>";
-			show_studyAjax(staff_id);
-			show_workAjax(staff_id);
-			show_familyAjax(staff_id);
-			show_moveAjax(staff_id);
-			show_rewardAjax(staff_id);
-			show_againstAjax(staff_id);
-			show_furloughAjax(staff_id);
-
+			
+			
+			show_agreementAjax(staff_id);
+			show_ExpAjax(staff_id);
+			show_awardAjax(staff_id);
+			show_trainAjax(staff_id);
 		}
 	}
-
 	xmlhttp.open("post", url, true);
 	xmlhttp.send();
 }
-// 显示学习经历
-function show_studyAjax(staff_id) {
-	console.log("study发生发生地方");
-	var xmlhttp_study;
-	if (window.XMLHttpRequest) {
-		xmlhttp_study = new XMLHttpRequest();
-	} else {
-		xmlhttp_study = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp_study.onreadystatechange = function() {
-		if (xmlhttp_study.readyState == 4 && xmlhttp_study.status == 200) {
-			var staff_study = xmlhttp_study.responseText;
-			if(staff_study=="studentIsNull"){
-				$('#studyExperience_table tbody ').html("");
-			}else{
-			console.log("staff_study" + staff_study);
-			staff_study = JSON.parse(staff_study);
-			staffVue.studys = staff_study;
-			}
-		}
-	}
-	xmlhttp_study.open("POST",
-			"/xsjsglxt/team/StaffStudent_getStudentByStaffId?student.staffStudent_staff="
-					+ staff_id, true);
-	xmlhttp_study.send();
-}
 // 显示工作经历
-function show_workAjax(staff_id) {
-	var xmlhttp_work;
+function show_ExpAjax(staff_id) {
+	console.log("study发生发生地方");
+	var xmlhttp_Exp;
 	if (window.XMLHttpRequest) {
-		xmlhttp_work = new XMLHttpRequest();
+		xmlhttp_Exp = new XMLHttpRequest();
 	} else {
-		xmlhttp_work = new ActiveXObject("Microsoft.XMLHTTP");
+		xmlhttp_Exp = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	xmlhttp_work.onreadystatechange = function() {
-		if (xmlhttp_work.readyState == 4 && xmlhttp_work.status == 200) {
-			var staff_work = xmlhttp_work.responseText;
-			if(staff_work=="worksIsNull"){
-				$('#wordExperience_table tbody').html("");
+	xmlhttp_Exp.onreadystatechange = function() {
+		if (xmlhttp_Exp.readyState == 4 && xmlhttp_Exp.status == 200) {
+			var staff_Exp = xmlhttp_Exp.responseText;
+			if(staff_Exp=="staffExpIsNull"){
+				$('#staffExperience_table tbody ').html("");
 			}else{
-			console.log(staff_work);
-			staff_work = JSON.parse(staff_work);
-			staffVue.works=staff_work;
+			console.log("staff_Exp" + staff_Exp);
+			staff_Exp = JSON.parse(staff_Exp);
+			staffVue.exps = staff_Exp;
 			}
 		}
 	}
-	xmlhttp_work.open("POST",
-			"/xsjsglxt/team/StaffWork_getWorkByStaffId?work.staffWork_staff="
-					+ staff_id, true);
-	xmlhttp_work.send();
+	xmlhttp_Exp.open("POST",
+			"/rlzyos/staff/staffExp_getStaffExpsByStaffId?staffExp.staffExp_staff="
+			+ staff_id, true);
+	xmlhttp_Exp.send();
 }
-// 显示家庭关系
-function show_familyAjax(staff_id) {
-	var xmlhttp_family;
+// 显示合同
+function show_agreementAjax(staff_id) {
+	var xmlhttp_agreement;
 	if (window.XMLHttpRequest) {
-		xmlhttp_family = new XMLHttpRequest();
+		xmlhttp_agreement = new XMLHttpRequest();
 	} else {
-		xmlhttp_family = new ActiveXObject("Microsoft.XMLHTTP");
+		xmlhttp_agreement = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	xmlhttp_family.onreadystatechange = function() {
-		if (xmlhttp_family.readyState == 4 && xmlhttp_family.status == 200) {
-			var staff_family = xmlhttp_family.responseText;
-			if(staff_family=="familyIsNull"){
-				$('#family_table tbody').html("");
+	xmlhttp_agreement.onreadystatechange = function() {
+		if (xmlhttp_agreement.readyState == 4 && xmlhttp_agreement.status == 200) {
+			var staff_agreement = xmlhttp_agreement.responseText;
+			if(staff_agreement=="null"){
+				$('#staffAgreement_table tbody').html("");
 			}else{
-			console.log(staff_family);
-			staff_family = JSON.parse(staff_family);
-			staffVue.familys=staff_family;
+			console.log(staff_agreement);
+			staff_agreement = JSON.parse(staff_agreement);
+			staffVue.agreements=staff_agreement;
+			}
+		}
+	}
+	xmlhttp_agreement.open("POST",
+			"/rlzyos/staff/staffAgreement_getStaffAgreementByStaffId?agreement.agreement_staff="
+			+ staff_id, true);
+	xmlhttp_agreement.send();
+}
+// 显示奖金
+function show_awardAjax(staff_id) {
+	var xmlhttp_award;
+	if (window.XMLHttpRequest) {
+		xmlhttp_award = new XMLHttpRequest();
+	} else {
+		xmlhttp_award = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp_award.onreadystatechange = function() {
+		if (xmlhttp_award.readyState == 4 && xmlhttp_award.status == 200) {
+			var staff_award = xmlhttp_award.responseText;
+			if(staff_award=="null"){
+				$('#staffAward_table tbody').html("");
+			}else{
+			console.log(staff_award);
+			staff_award = JSON.parse(staff_award);
+			staffVue.awards=staff_award;
 
 			}
 		}
 	}
-	xmlhttp_family.open("POST",
-			"/xsjsglxt/team/StaffFamily_getFamilyByStaffId?family.staffFamily_staff="
-					+ staff_id, true);
-	xmlhttp_family.send();
+	xmlhttp_award.open("POST",
+			"/rlzyos/staff/staffAward_getStaffAwardByStaffId?staffAward.award_staff="
+			+ staff_id, true);
+	xmlhttp_award.send();
 }
-
-// 显示刑警大队调动情况
+//显示调配
 function show_moveAjax(staff_id) {
 	var xmlhttp_move;
 	if (window.XMLHttpRequest) {
@@ -149,11 +154,11 @@ function show_moveAjax(staff_id) {
 	}
 	xmlhttp_move.onreadystatechange = function() {
 		if (xmlhttp_move.readyState == 4 && xmlhttp_move.status == 200) {
-			var staff_move = xmlhttp_move.responseText;
-			if(staff_move=="moveIsNull"){
-				$('#policeChange_table tbody').html("");
+			var staff_move = xmlhttp_award.responseText;
+			if(staff_move=="null"){
+				$('#staffAward_table tbody').html("");
 			}else{
-			console.log("staff_move" + staff_move);
+			console.log(staff_move);
 			staff_move = JSON.parse(staff_move);
 			staffVue.moves=staff_move;
 
@@ -161,87 +166,33 @@ function show_moveAjax(staff_id) {
 		}
 	}
 	xmlhttp_move.open("POST",
-			"/xsjsglxt/team/StaffMove_getMoveByStaffId?move.staffMove_staff="
-					+ staff_id, true);
+			"/rlzyos/staff/staffAward_getStaffAwardByStaffId?staffAward.award_staff="
+			+ staff_id, true);
 	xmlhttp_move.send();
 }
-// 显示立功受奖情况
-function show_rewardAjax(staff_id) {
-	var xmlhttp_reward;
+//显示培训
+function show_trainAjax(staff_id) {
+	var xmlhttp_train;
 	if (window.XMLHttpRequest) {
-		xmlhttp_reward = new XMLHttpRequest();
+		xmlhttp_train = new XMLHttpRequest();
 	} else {
-		xmlhttp_reward = new ActiveXObject("Microsoft.XMLHTTP");
+		xmlhttp_train = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	xmlhttp_reward.onreadystatechange = function() {
-		if (xmlhttp_reward.readyState == 4 && xmlhttp_reward.status == 200) {
-			var staff_reward = xmlhttp_reward.responseText;
-			if(staff_reward=="rewardsIsNull"){
-				$('#prized_table tbody').html("");
+	xmlhttp_train.onreadystatechange = function() {
+		if (xmlhttp_train.readyState == 4 && xmlhttp_train.status == 200) {
+			var staff_train = xmlhttp_train.responseText;
+			if(staff_train=="staffTriansIsNull"){
+				$('#staffTrain_table tbody').html("");
 			}else{
-			console.log(staff_reward);
-			staff_reward = JSON.parse(staff_reward);
-            staffVue.rewards=staff_reward;
+			console.log(staff_train);
+			staff_train = JSON.parse(staff_train);
+			staffVue.trains=staff_train;
 
 			}
 		}
 	}
-	xmlhttp_reward.open("POST",
-			"/xsjsglxt/team/StaffReward_getRewardByStaffId?reward.staffReward_staff="
-					+ staff_id, true);
-	xmlhttp_reward.send();
-}
-//显示违纪情况
-function show_againstAjax(staff_id) {
-	var xmlhttp_against;
-	if (window.XMLHttpRequest) {
-		xmlhttp_against = new XMLHttpRequest();
-	} else {
-		xmlhttp_against = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp_against.onreadystatechange = function() {
-		if (xmlhttp_against.readyState == 4 && xmlhttp_against.status == 200) {
-			var staff_against = xmlhttp_against.responseText;
-			if(staff_against=="principleIsNull"){
-				$('#againstPrinciple_table tbody').html("");
-			}else{
-			staff_against = JSON.parse(staff_against);
-			staffVue.punishments=staff_against;
-
-			}
-		}
-	}
-	xmlhttp_against
-			.open(
-					"POST",
-					"/xsjsglxt/team/StaffPrinciple_getPrincipleByStaffId?principle.staffPrinciple_staff="
-							+ staff_id, true);
-	xmlhttp_against.send();
-}
-// 显示休假情况
-function show_furloughAjax(staff_id) {
-	var xmlhttp_furlough;
-	if (window.XMLHttpRequest) {
-		xmlhttp_furlough = new XMLHttpRequest();
-	} else {
-		xmlhttp_furlough = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp_furlough.onreadystatechange = function() {
-		if (xmlhttp_furlough.readyState == 4 && xmlhttp_furlough.status == 200) {
-			var staff_furlough = xmlhttp_furlough.responseText;
-			if(staff_furlough=="furloughIsNull"){
-				$('#vocation_table tbody').html("");
-			}else{
-			staff_furlough = JSON.parse(staff_furlough);
-            staffVue.furloughs=staff_furlough;
-		
-			}
-		}
-	}
-	xmlhttp_furlough
-			.open(
-					"POST",
-					"/xsjsglxt/team/StaffFurlough_getFurloughByStaffId?furlough.staffFurlough_staff="
-							+ staff_id, true);
-	xmlhttp_furlough.send();
+	xmlhttp_train.open("POST",
+			"/rlzyos/staff/staffTrain_getStaffTrainsByStaffId?stafftrain.stafftrain_staff="
+			+ staff_id, true);
+	xmlhttp_train.send();
 }

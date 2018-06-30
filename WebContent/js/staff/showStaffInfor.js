@@ -10,6 +10,8 @@ var queryConditionTemp = {
 	"staffName" : "",//查询姓名
 	"staffSex" : "", //筛选性别
 	"staffStatus" : "",//筛选状态
+	"staffInTime" : "desc",//入职时间
+	"staffRecord" : ""
 }
 window.onload = function() {
 	allPageVue = new Vue({
@@ -20,6 +22,7 @@ window.onload = function() {
 			pageCount : '10',
 			totalCount : '',
 			staffs : ''
+			
 		}
 	});
 	loadData();
@@ -43,15 +46,30 @@ var changeSex = function(event) {
 	queryConditionTemp.currPage = "1";
 	loadData();
 }
+
+var changeRecord = function(event) {
+	queryConditionTemp.staffRecord = event.value;
+	queryConditionTemp.currPage = "1";
+	loadData();
+}
+//时间排序
+var changeTime = function(event) {
+	queryConditionTemp.staffInTime = event.value;
+	queryConditionTemp.currPage = "1";
+	loadData();
+}
+
 //进入修改页面
 function createConfirmUpdata(event){
-	alert("进入修改页面");
+/*	alert("进入修改页面");*/
 	enterUpdataPage(event);
 }
 
+//跳转到修改
 function enterUpdataPage(event){
 	window.location = "/rlzyos/staff/staff_page_UpdataStaff?rlzy_staff_id=" + event.id;
 }
+
 //显示数据
 var loadData = function() {
 	$('#mainPanel').hide();
@@ -64,7 +82,10 @@ var loadData = function() {
 		"staffVO.staff_name" : queryConditionTemp.staffName,
 		"staffVO.staff_sex" : queryConditionTemp.staffSex,
 		"staffVO.staff_status" : queryConditionTemp.staffStatus,
-	}	
+		"staffVO.staff_InTime" : queryConditionTemp.staffInTime,
+		"staffVO.staff_record" : queryConditionTemp.staffRecord,
+		
+	}
 	$.ajax({
 		url : '/rlzyos/staff/staff_getStaffByPage',
 		type : 'POST',
@@ -84,54 +105,142 @@ var loadData = function() {
 			
 			queryConditionTemp.staffName = result.staff_name;
 			queryConditionTemp.staffSex = result.staff_sex;
-			queryConditionTemp.staffStatus = result.staff_status
+			queryConditionTemp.staffStatus = result.staff_status;
+			queryConditionTemp.staffInTime = result.staff_InTime;
+			queryConditionTemp.staffRecord = result.staff_record;
 			$('#loadingLayer').hide();
 			$('#mainPanel').show();
 		}
 	});
 }
-//删除员工所有信息(在职，离职)
+//删除员工所有信息(离职)
 var deleteStaff = function(event) {
+//	getXmlHttp();
+//	xmlHttp.open("POST", "/rlzyos/staff/staff_getStaffById", true);
+//	var formData = new FormData();
+//	formData.append("rlzy_staff_id", event.id);
+//	xmlHttp.send(formData);
+//	xmlHttp.onreadystatechange = function() {
+//		if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+//			var result = xmlHttp.responseText;
+//			result = JSON.parse(result);
+//			if(result.staff_status=="离职"){//离职全部删除
+				$.ajax({
+					url : '/rlzyos/staff/staff_deleteStaff',
+					type : 'POST',
+					data : {
+						'rlzy_staff_id' : event.id
+					},success:function(data){
+						toastr.success('删除成功！');
+						loadData();
+					}
+				});
+				console.log("删除员工履历");
+				$.ajax({//删除员工的工作履历
+					url : '/rlzyos/staff/staffExp_deleteStaffExps',
+					type : 'POST',
+					data : {
+						'staffExp.staffExp_staff' : event.id
+					}
+				});
+				console.log("删除合同信息");
+				$.ajax({//删除员工的合同信息
+					url : '/rlzyos/staff/staffAgreement_deleteStaffAgreements',
+					type : 'POST',
+					data : {
+						'agreement.agreement_staff' : event.id
+					}
+				});
+				
+				//删除员工的奖金记录
+				console.log("删除奖金信息");
+				$.ajax({//删除员工的奖金信息
+					url : '/rlzyos/staff/staffAward_deleteStaffAwards',
+					type : 'POST',
+					data : {
+						'staffAward.award_staff' : event.id
+					}
+				});
+				//删除调配记录
+				console.log("删除调动信息");
+				$.ajax({//删除员工的奖金信息
+					url : '/rlzyos/staff/staffMove_deleteStaffMoves',
+					type : 'POST',
+					data : {
+						'staffmove.staffMove_staff' : event.id
+					}
+				});
+				//删除培训记录
+				console.log("删除培训信息");
+				$.ajax({//删除员工的奖金信息
+					url : '/rlzyos/staff/staffTrain_deleteStaffTrains',
+					type : 'POST',
+					data : {
+						'stafftrain.stafftrain_staff' : event.id
+					}
+				});
+//				toastr.success("删除成功");
+//			}else  {
+//				toastr.warning("该员工还未离职,请离职后再来删除");
+//			}
+//		}
+//	}
 	//删除员工的基本信息
-	$.ajax({
-		url : '/rlzyos/staff/staff_deleteStaff',
-		type : 'POST',
-		data : {
-			'rlzy_staff_id' : event.id
-		}
-	});
-}
-	//删除员工的合同信息
-	//删除员工的工作履历
-	//删除员工的奖金记录
-//确认删除提示
-var createConfirmDelete = function(event) {
-	$.confirm({
-		title : '真的要删除吗？',
-		content : '',
-		type : 'red',
-		autoClose : 'closeAction|5000',
-		buttons : {
-			deleteAction : {
-				text : '确认',
-				btnClass : 'btn-blue',
-				action : function() {
-					deleteStaff(event);
-					alert(event);
-					loadData();
-				}
-			},
-			closeAction : {
-				text : '取消',
-				btnClass : 'btn-red',
-				action : function() {
-
-				}
-			}
-		}
-	})
+				
+	
+	
 }
 	
+//确认删除提示
+function createConfirmDelete(event) {
+	getXmlHttp();
+	xmlHttp.open("POST", "/rlzyos/staff/staff_getStaffById", true);
+	var formData = new FormData();
+	formData.append("rlzy_staff_id", event.id);
+	xmlHttp.send(formData);
+	xmlHttp.onreadystatechange = function() {
+		if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+			var result = xmlHttp.responseText;
+			result = JSON.parse(result);
+			if(result.staff_status=="离职"){
+					$.confirm({
+						title : '',
+						content : '一经删除该员工全部信息将清空，请慎重考虑，真的要删除吗？',
+						type : 'red',
+						autoClose : 'closeAction|5500',
+						buttons : {
+							deleteAction : {
+								text : '确认',
+								btnClass : 'btn-blue',
+								action : function() {
+									
+									deleteStaff(event);
+									/*alert(event);*/
+									console.log("删除全部信息"+event);
+									
+									
+								}
+							},
+							closeAction : {
+								text : '取消',
+								btnClass : 'btn-red',
+								action : function() {
+				
+								}
+							}
+						}
+					})
+				}else {
+					toastr.error("该员工还未离职,请离职后再来删除");
+				}
+			}
+	}		
+}
+
+var skipToDetail = function(event) {
+	window.location = "/rlzyos/staff/staff_page_staffDetails?rlzy_staff_id="
+			+ event.id;
+}
 //相应分页响应
 var firstPage = function() {
 	if (queryConditionTemp.currPage <= 1) {
@@ -170,9 +279,10 @@ var endPage = function() {
 }
 
 var jumpPage = function() {
-	if ($('#jumpInput').val() <= queryConditionTemp.totalPage
-			&& $('#jumpInput').val() >= 1) {
-		queryConditionTemp.currPage = $('#jumpInput').val()
+	if ($('#skipPage').val() <= queryConditionTemp.totalPage
+			&& $('#skipPage').val() >= 1) {
+/*		alert($('#skipPage').val());   */
+		queryConditionTemp.currPage = $('#skipPage').val()
 		loadData();
 	} else {
 		toastr.error("不存在这一页");

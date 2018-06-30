@@ -3,8 +3,11 @@ package com.rlzy.service.impl.staff;
 import java.util.List;
 import com.rlzy.dao.staff.StaffExpDao;
 import com.rlzy.domain.DO.rlzy_staffexp;
+import com.rlzy.domain.DTO.Staff.staffExpDTO;
 import com.rlzy.domain.VO.showStaffExpVO;
 import com.rlzy.service.staff.StaffExpService;
+
+import util.TeamUtil;
 
 public class StaffExpServiceImpl implements StaffExpService {
 	private StaffExpDao staffExpDao;
@@ -32,25 +35,35 @@ public class StaffExpServiceImpl implements StaffExpService {
 	@Override
 	public void upadteStaffExp(rlzy_staffexp staffexp) {
 		// TODO Auto-generated method stub
-		staffExpDao.updataStaffExp(staffexp);
+		rlzy_staffexp rs = staffExpDao.getStaffExpById(staffexp.getRlzy_staffExp_id());
+		rs.setStaffExp_address(staffexp.getStaffExp_address());
+		rs.setStaffExp_gmt_modified(TeamUtil.getStringSecond());
+		rs.setStaffExp_overTime(staffexp.getStaffExp_overTime());
+		rs.setStaffExp_remark(staffexp.getStaffExp_remark());
+		rs.setStaffExp_startTime(staffexp.getStaffExp_startTime());
 	}
 	//删除该员工所有
 	@Override
-	public void deleteStaffExp(String staffExp_staff) {
+	public void deleteStaffExps(String staffExp_staff) {
 		// TODO Auto-generated method stub
-		staffExpDao.deleteStaffExp(staffExp_staff);
+		staffExpDao.deleteStaffExps(staffExp_staff);
 	}
 	//删除员工一条履历
 	@Override
-	public void deleteStaffExps(String rlzy_staffExp_id) {
+	public void deleteStaffExp(String rlzy_staffExp_id) {
 		// TODO Auto-generated method stub
 		staffExpDao.deleteStaffExp(rlzy_staffExp_id);
 	}
 	//保存多条履历
 	@Override
 	public void saveStaffExp(List<rlzy_staffexp> staffexps) {
+		for(rlzy_staffexp rlzy_staffexp : staffexps ){
+			rlzy_staffexp.setRlzy_staffExp_id(TeamUtil.getUuid());
+			rlzy_staffexp.setStaffExp_gmt_create(TeamUtil.getStringSecond());
+			rlzy_staffexp.setStaffExp_gmt_modified(TeamUtil.getStringSecond());
+		}
 		// TODO Auto-generated method stub
-		staffExpDao.addStaffExp(staffexps);
+		staffExpDao.addStaffExps(staffexps);
 	}
 
 	@Override
@@ -58,10 +71,9 @@ public class StaffExpServiceImpl implements StaffExpService {
 		// TODO Auto-generated method stub
 		System.out.println("getpage");
 		int count =staffExpDao.getStaffExpCount(staffExpVO);
-		System.out.println("staffserviceimp::"+count);
 		staffExpVO.setTotalPage((int) Math.ceil((double) count / (double) staffExpVO.getPageCount()));
 		staffExpVO.setTotalCount(count);
-		List<rlzy_staffexp> staffexps = staffExpDao.getStaffExpByPage(staffExpVO);
+		List<staffExpDTO> staffexps = staffExpDao.getStaffExpByPage(staffExpVO);
 		staffExpVO.setStaffExps(staffexps);
 	}
 
@@ -72,7 +84,8 @@ public class StaffExpServiceImpl implements StaffExpService {
 	}
 
 	@Override
-	public void addStaffExp(rlzy_staffexp rs) {
+	public void  addStaffExp(rlzy_staffexp rs) {
+		
 		// TODO Auto-generated method stub
 		staffExpDao.addStaffExp(rs);
 	}
