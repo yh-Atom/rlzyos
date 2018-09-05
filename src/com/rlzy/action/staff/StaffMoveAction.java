@@ -32,7 +32,7 @@ public class StaffMoveAction extends ActionSupport{
 	public void addStaffMove() throws IOException{
 //		System.out.println("该员工id为"+staffmove.getStaffMove_staff());
 		staffMoveService.addStaffMove(staffMoves);
-		System.out.println("该员工原职务是为"+staffMove_nowduty);
+		/*System.out.println("该员工原职务是为"+staffMove_nowduty);*/
 		rlzy_staffinfo rs = staffService.getStaffById(staffMove_staff);
 		rs.setStaff_duty(staffMove_nowduty);
 		rs.setStaff_depaterment(staffMove_nowdepartment);
@@ -46,7 +46,7 @@ public class StaffMoveAction extends ActionSupport{
 	}
 	//得到员工信息的值
 	public void getValueByNumber() throws IOException{
-		System.out.println("得到值");
+		/*System.out.println("得到值");*/
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
 		List<rlzy_staffinfo> rs =staffMoveService.getValueByNumber(staff_number);
@@ -63,7 +63,7 @@ public class StaffMoveAction extends ActionSupport{
 		String result = gson.toJson(staffMoveVO);
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
-		System.out.println(result);
+		/*System.out.println(result);*/
 		PrintWriter pw =response.getWriter();
 		pw.write(result);
 		pw.flush();
@@ -95,7 +95,7 @@ public class StaffMoveAction extends ActionSupport{
 	public void getStaffMoveById() throws IOException{
 		rlzy_staffmove rs = staffMoveService.getStaffMoveById(rlzy_staffMove_id);
 		HttpServletResponse response = ServletActionContext.getResponse();
-		System.out.println(rlzy_staffMove_id);
+		/*System.out.println(rlzy_staffMove_id);*/
 		response.setContentType("text/html;charset=utf-8");
 		Gson gson = new Gson();
 		String result = gson.toJson(rs);
@@ -125,9 +125,9 @@ public class StaffMoveAction extends ActionSupport{
 	}
 	//修改调动记录
 	public void updataStaffMove() throws IOException{
-		System.out.println("修改一下调动记录 ");
+		/*System.out.println("修改一下调动记录 ");*/
 		staffMoveService.updataStaffMove(staffmove);;
-		System.out.println(staffmove.getStaffMove_nowdepartment());
+		/*System.out.println(staffmove.getStaffMove_nowdepartment());*/
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();

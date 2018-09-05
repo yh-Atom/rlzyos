@@ -74,11 +74,11 @@ public class UserDaoImpl implements UserDao{
 		// TODO Auto-generated method stub
 		String query = "%" + queryString + "%";
 		String hql = "select count(*) from rlzy_staffinfo where (staff_number like '" + query + "' or staff_gmt_create like '" + query + "' or staff_name like '" + query + "')";
-		System.out.println(hql);
-		System.out.println("hqlcount");
+		/*System.out.println(hql);
+		System.out.println("hqlcount");*/
 		int count = ((Number) getSession().createQuery(hql).uniqueResult()).intValue();
-		System.out.println(count);
-		System.out.println("getusercount");
+		/*System.out.println(count);
+		System.out.println("getusercount");*/
 		return count;
 	}
 
@@ -87,7 +87,7 @@ public class UserDaoImpl implements UserDao{
 		// TODO Auto-generated method stub
 		String query = "%" + queryString + "%";
 		String hql = "from rlzy_staffinfo where (staff_number like '" + query + "' or staff_name like '" + query + "'or staff_tel like '" + query + "') ";
-		System.out.println(hql+"page");
+		/*System.out.println(hql+"page");*/
 		List<rlzy_staffinfo> list = getSession().createQuery(hql).setFirstResult((currPage - 1) * 10).setMaxResults(10).list();
 		return list;
 	}

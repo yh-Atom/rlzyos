@@ -15,11 +15,11 @@ public class PaperDaoImpl implements PaperDao {
 	public int getPaperCount(String queryString, int currPage) {
 		String query = "%" + queryString + "%";
 		String hql = "select count(*) from rlzy_paper where (paper_name like '" + query + "')";
-		System.out.println(hql);
-		System.out.println("hqlcount");
+		/*System.out.println(hql);
+		System.out.println("hqlcount");*/
 		int count = ((Number) getSession().createQuery(hql).uniqueResult()).intValue();
-		System.out.println(count);
-		System.out.println("getTraincount");
+		/*System.out.println(count);
+		System.out.println("getTraincount");*/
 		return count;
 	}
 

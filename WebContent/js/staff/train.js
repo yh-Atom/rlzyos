@@ -71,15 +71,15 @@ function SubmitCk() {
 //	 var reg = new RegExp("^[0-9]*$");
 //	 var reg2 = new RegExp("^[\u4E00-\u9FA5]{1,5}$");
 	 var obj = document.getElementById("train_name");
-	 alert(obj.value);
+	/* alert(obj.value);*/
 	 var obj1 = document.getElementById("train_startTime");
-	 alert(obj1.value);
+	 /*alert(obj1.value);*/
 	 var obj2 = document.getElementById("train_pay");
-	 alert(obj2.value);
+	/* alert(obj2.value);*/
 	 var obj3 = document.getElementById("train_overTime");
-	 alert(obj3.value);
+	/* alert(obj3.value);*/
 	 var obj4 = document.getElementById("train_content");
-	 alert(obj4.value);
+	 /*alert(obj4.value);*/
 //	 var obj1 = document.getElementById("staffdepartment_amount");
 //	 var obj2 = document.getElementById("staffdepartment_name");
 //	 var obj3 = document.getElementById("staffdepartment_introduct");
@@ -144,8 +144,8 @@ function addTrain(){
 	var reg2 = new RegExp("^[\u4E00-\u9FA5]{1,5}$");
 	var str = train_startTime.replace(biaoDa1,"");
 	var str1 = train_overTime.replace(biaoDa1,"");
-	alert(train_name);
-	alert(train_name.length);
+	/*alert(train_name);*/
+	/*alert(train_name.length);*/
 	
 	if(str >= str1){
 		toastr.error("请正确填写时间！");

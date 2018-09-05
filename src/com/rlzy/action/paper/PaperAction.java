@@ -21,9 +21,9 @@ public class PaperAction extends ActionSupport{
 	
 	//获取所有
 		public void getPaperByPage() throws IOException{
-			System.out.println("fdsljfldsk");
+			/*System.out.println("fdsljfldsk");*/
 			showPaperVO suv = paperService.getPaperByPage(queryString, currPage);
-			System.out.println("wewewewewe");
+			/*System.out.println("wewewewewe");*/
 			Gson gson = new Gson();
 			String result = gson.toJson(suv);
 			HttpServletResponse response = ServletActionContext.getResponse();
@@ -37,7 +37,7 @@ public class PaperAction extends ActionSupport{
 		
 		//添加
 		public void addPaper() throws IOException{
-			System.out.println("1");
+			/*System.out.println("1");*/
 			HttpServletResponse response=ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter pw=response.getWriter();
@@ -48,7 +48,7 @@ public class PaperAction extends ActionSupport{
 			ru.setPaper_name(paper_name);
 			ru.setPaper_time(paper_time);
 			paperService.addPaper(ru);
-			System.out.println("添加成功");
+			/*System.out.println("添加成功");*/
 			pw.write("添加成功");
 			pw.flush();
 			pw.close();
@@ -56,7 +56,7 @@ public class PaperAction extends ActionSupport{
 		
 		//删除
 		public void deletePaper() throws IOException{
-			System.out.println(paper_id);
+			/*System.out.println(paper_id);*/
 			HttpServletResponse response=ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter pw=response.getWriter();
