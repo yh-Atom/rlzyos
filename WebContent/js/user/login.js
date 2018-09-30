@@ -83,8 +83,7 @@ function login() {
 				xmlHttp.send();
 				xmlHttp.onreadystatechange = function() {
 					if (isBack()) {
-						/*console.log("得到数据");*/
-						/*alert("xixi");*/
+						
 						}
 					}
 				toastr.success("登陆成功！");
