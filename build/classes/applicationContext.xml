@@ -10,7 +10,6 @@
 	<!-- 导入资源文件 -->
 	<context:property-placeholder location="classpath:db.properties" />
 	<!-- 配置C3P0数据源 -->
-
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="user" value="${jdbc.user}"></property>
 		<property name="password" value="${jdbc.password}"></property>
