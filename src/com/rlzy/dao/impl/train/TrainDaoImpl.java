@@ -49,7 +49,6 @@ public class TrainDaoImpl implements TrainDao {
 		getSession().update(train);
 	}
 
-
 	public List<rlzy_train> getTrainByPage(showTrainVO trainVO) {
 		String hql = "from rlzy_train where 1=1";
 		if(trainVO.getTrain_name() !=null && trainVO.getTrain_name().trim().length() > 0){

@@ -21,5 +21,4 @@ public interface TrainDao {
 	
 	public boolean judgeTrainByTrainname(String train_name);
 
-	
 }
